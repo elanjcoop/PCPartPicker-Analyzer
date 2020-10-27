@@ -13,10 +13,14 @@ total_price = price_total(prices_per_component)
 
 # print("{:.2f}".format(total_price))
 
+"""
+TODO (else statement):
+figure out what components are missing and promt the user for theoretical values
+"""
 if is_all_components_present(prices_per_component):
     print("All of the necessary components have been accounted, " +
           "for a total of ")
-    print("{:.2f}".format(total_price))
+    print("${:.2f}".format(total_price))
     budget_chosen = False
     budget_found = False
     print("Is that correct? Enter [y] for yes or [n] for no.", end = (''))
@@ -39,5 +43,11 @@ if is_all_components_present(prices_per_component):
                     print("Sorry, invalid input. Please enter a float.", end = (''))
         else:
             print("Sorry, invalid input. Select [y] or [n].", end = '')
-            
-print("{:.2f}".format(budget))
+else:
+    print("Sorry, this program requires all of these components to have a " +
+          "price:")
+    print(relevant_components)
+    print("Come back when you have those numbers filled out!")
+    raise SystemExit()
+
+evaluate_price(prices_per_component, budget)

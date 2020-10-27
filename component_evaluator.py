@@ -1,6 +1,7 @@
 from beautiful_soup_cleaner import relevant_components
-"""
-"""
+
+component_percentages = {"CPU": x, "Memory": x, "Motherboard": x, "Storage": x, "External Storage": x, "Video Card": x, "Power Supply": x, "Case": x}
+
 def price_total(component_dict):
     total_sum = 0
     for key in component_dict:
@@ -20,4 +21,7 @@ def is_all_components_present(component_dict):
         return False
     return True
 
-#def component_evaluator(component_dict):
+"""
+Remember, ext storage is not required
+"""
+def evaluate_price(component_dict, in_budget):
