@@ -1,7 +1,8 @@
 from bs4 import BeautifulSoup
 import requests
+import re
 
-relevant_components = ["CPU", "Memory", "Motherboard", "Storage", "External Storage", "Video Card", "Power Supply", "Case"]
+relevant_components = ["CPU", "Memory", "Motherboard", "Storage", "Video Card", "Power Supply", "Case", "External Storage"]
 page_not_found = "Page Not Found"
 error_codes = {"/b/": "Please provide a link of a build.",
                "https://pcpartpicker.com/": "Please provide a PCPARTPICKER link."
@@ -41,7 +42,8 @@ def delete_duplicates(dirty_list):
 
 """
 Removes components which we will not factor in (e.g. CPU Cooler, Case Fans, Operating System, Software, Custom, etc.)
-Renmoves components that have no cost entry
+Removes components that have no cost entry
+Turns external storage into regular storage
 :param dirty_dict: our full dict with the components we should not have
 :return clean_dict: list with irrelevant components removed
 """
@@ -49,6 +51,14 @@ def delete_irrelevant_components(dirty_dict):
     clean_dict = dict(dirty_dict)
     for key in dirty_dict:
         if key not in relevant_components or dirty_dict[key] == 0:
+            del clean_dict[key]
+        if key == "External Storage":
+            value = dirty_dict[key]
+            try:
+                clean_dict["Storage"] += value
+            except KeyError:
+                clean_dict["Storage"] = 0
+                clean_dict["Storage"] += value
             del clean_dict[key]
     return clean_dict
 
@@ -78,9 +88,12 @@ def get_prices_per_component_dirty(soup):
         components.append(element.string)
 
     for element in soup.find_all('td', class_='td__name'):
-        element_price = element.find('a', class_="td__price")
+        element_price = element.find('p', class_="td__price")
+        if element_price == None:
+            element_price = element.find('a', class_="td__price")
         if element_price != None:
-            prices.append(float((element_price.string).strip('$')))
+            numeric_string = re.sub("[^0-9, .]", "", element_price.string)
+            prices.append(float(numeric_string))
         else:
             prices.append(0)
     prices_per_component_dirty = list(zip(components, prices))

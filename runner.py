@@ -1,5 +1,12 @@
 from beautiful_soup_cleaner import *
 from component_evaluator import *
+from helpful_methods import *
+
+print("Welcome to the PCPartPicker link analyzer!")
+print("This program takes in the following values only:")
+print_max_five(relevant_components)
+print("and then computes the budget of those values, then lets")
+print("you know where you need to make changes.")
 
 html_file_raw = input("Enter a link:\n")
 print("\n")
@@ -15,7 +22,7 @@ total_price = price_total(prices_per_component)
 
 """
 TODO (else statement):
-figure out what components are missing and promt the user for theoretical values
+figure out what components are missing and prompt the user for theoretical values
 """
 if is_all_components_present(prices_per_component):
     print("All of the necessary components have been accounted, " +
@@ -23,7 +30,8 @@ if is_all_components_present(prices_per_component):
     print("${:.2f}".format(total_price))
     budget_chosen = False
     budget_found = False
-    print("Is that correct? Enter [y] for yes or [n] for no.", end = (''))
+    print("Is that the correct budget for these components?")
+    print("Enter [y] for yes or [n] for no.", end = (''))
     while(not budget_chosen or not budget_found):
         is_budget = input().upper()
         if is_budget == "Y":
@@ -46,8 +54,7 @@ if is_all_components_present(prices_per_component):
 else:
     print("Sorry, this program requires all of these components to have a " +
           "price:")
-    print(relevant_components)
+    print(relevant_components[0:-1])
     print("Come back when you have those numbers filled out!")
     raise SystemExit()
-
-evaluate_price(prices_per_component, budget)
+evaluate_price_modest(prices_per_component, budget)
