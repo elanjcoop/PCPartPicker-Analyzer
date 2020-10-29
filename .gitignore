@@ -2,3 +2,4 @@
 __pycache__/beautiful_soup_cleaner.cpython-38.pyc
 __pycache__/component_evaluator.cpython-38.pyc
 .DS_Store
+*.pyc

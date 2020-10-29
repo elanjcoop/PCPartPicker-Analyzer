@@ -15,10 +15,7 @@ html_file = clean_html(html_file_raw)
 
 prices_per_component = get_list(html_file)
 
-print(prices_per_component)
 total_price = price_total(prices_per_component)
-
-# print("{:.2f}".format(total_price))
 
 """
 TODO (else statement):
@@ -26,8 +23,8 @@ figure out what components are missing and prompt the user for theoretical value
 """
 if is_all_components_present(prices_per_component):
     print("All of the necessary components have been accounted, " +
-          "for a total of ")
-    print("${:.2f}".format(total_price))
+          "for a total of ", end = '')
+    print("${:.2f}.".format(total_price))
     budget_chosen = False
     budget_found = False
     print("Is that the correct budget for these components?")

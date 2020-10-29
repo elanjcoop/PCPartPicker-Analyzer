@@ -1,6 +1,7 @@
 from beautiful_soup_cleaner import relevant_components
 
 component_percentages_modest = {"CPU": 0.2, "Memory": 0.07, "Motherboard": 0.11, "Storage": 0.1, "Video Card": 0.35, "Power Supply": 0.09, "Case": 0.08}
+budget = 0
 
 """
 Finds the price of the current build when all components are present.
@@ -12,7 +13,6 @@ def price_total(component_dict):
     total_sum = round(total_sum, 2)
     return total_sum
 
-budget = 0
 
 def is_all_components_present(component_dict):
     relevant_clone = relevant_components.copy()
@@ -33,10 +33,12 @@ def evaluate_price(component_dict, in_budget):
 def evaluate_price_modest(component_dict, in_budget):
     for component in component_dict:
         component_percentage = component_dict[component] / in_budget
-        if component_percentage < component_percentages_modest[component]:
-            print ("You are overspending on " + component)
+        if component_percentage < (component_percentages_modest[component] * 0.8):
+            print ("You are underspending on " + component + ".")
+        elif component_percentage > (component_percentages_modest[component] * 1.2):
+            print("You are overspending on " + component + ".")
         else:
-            print("You are underspending on " + component)
+            print("You are correctly spending on " + component + ".")
 
     
 """
