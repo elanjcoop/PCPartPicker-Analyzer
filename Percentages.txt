@@ -1,0 +1,16 @@
+Humble (0 - 649):
+cpu: 27%
+gpu: 23%
+storage: 9%
+Memory: 7%
+Mobo: 14%
+case: 9%
+Power supply: 11%
+
+Modest (650-1299):
+cpu: 20% gpu: 35%
+storage: 10%
+memory: 7%
+mobo: 11%
+case: 8%
+power supply: 9%

@@ -1,10 +1,17 @@
 from beautiful_soup_cleaner import relevant_components
 
+component_percentages_humble = {"CPU": 0.27, "Memory": 0.07, "Motherboard": 0.14, "Storage": 0.09, "Video Card": 0.23, "Power Supply": 0.11, "Case": 0.09}
 component_percentages_modest = {"CPU": 0.2, "Memory": 0.07, "Motherboard": 0.11, "Storage": 0.1, "Video Card": 0.35, "Power Supply": 0.09, "Case": 0.08}
+component_percentages_pro = {"CPU": 0.2, "Memory": 0.07, "Motherboard": 0.11, "Storage": 0.1, "Video Card": 0.35, "Power Supply": 0.09, "Case": 0.08}
+component_percentages_enthusiast = {"CPU": 0.2, "Memory": 0.07, "Motherboard": 0.11, "Storage": 0.1, "Video Card": 0.35, "Power Supply": 0.09, "Case": 0.08}
+
+
 budget = 0
 
 """
 Finds the price of the current build when all components are present.
+:param component_dict: dict with all the prices and components
+:return total_sum: total price
 """
 def price_total(component_dict):
     total_sum = 0
@@ -13,7 +20,12 @@ def price_total(component_dict):
     total_sum = round(total_sum, 2)
     return total_sum
 
-
+"""
+Receives dictionary of prices and components and determines if the
+required 7 are present.
+:param component_dict: prices and component dict
+:return: boolean
+"""
 def is_all_components_present(component_dict):
     relevant_clone = relevant_components.copy()
     del relevant_clone[relevant_clone == "External Storage"]
@@ -25,34 +37,40 @@ def is_all_components_present(component_dict):
     return True
 
 """
-Remember, ext storage is not required
+Crux of the program!
+Checks each component according to the build type's dictionary
+If it's under 80% of the suggested allocation, you're overspending,
+over 120%, you are overspending.
+Feel free to reach out to me if you think these numbers can be refactored.
+:param component_dict: dict of prices and components
+:param in_budget: budget inputted into method
+:return: void, but prints messages as it goes, this might change in later iterations of program
 """
 def evaluate_price(component_dict, in_budget):
-    build_type = find_build_type(in_budget)
-    
-def evaluate_price_modest(component_dict, in_budget):
+    component_percentages_current = find_build_type(in_budget)
     for component in component_dict:
         component_percentage = component_dict[component] / in_budget
-        if component_percentage < (component_percentages_modest[component] * 0.8):
+        if component_percentage < (component_percentages_current[component] * 0.8):
             print ("You are underspending on " + component + ".")
-        elif component_percentage > (component_percentages_modest[component] * 1.2):
+        elif component_percentage > (component_percentages_current[component] * 1.2):
             print("You are overspending on " + component + ".")
         else:
             print("You are correctly spending on " + component + ".")
 
+
     
 """
-Finds the type of build to determine how the components should be allocated
+Finds the type of build and returns dict that shows how the components should be allocated
 :param in_budget: budget of build
-:return build_type: level of build to be examined
+:return build_type: dictionary with percentages depending on build type
 """
 def find_build_type(in_budget):
     if in_budget < 650:
-        build_type = "humble"
+        component_percentages_current = component_percentages_humble
     elif in_budget >= 650 and in_budget < 1300:
-        build_type = "modest"
+        component_percentages_current = component_percentages_modest
     elif in_budget >= 1300 and in_budget < 2200:
-        build_type = "enthusiast"
+        component_percentages_current = component_percentages_enthusiast
     else:
-        build_type = "pro"
-    return build_type
+        component_percentages_current = component_percentages_pro
+    return component_percentages_current

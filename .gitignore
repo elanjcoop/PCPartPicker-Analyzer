@@ -3,3 +3,9 @@ __pycache__/beautiful_soup_cleaner.cpython-38.pyc
 __pycache__/component_evaluator.cpython-38.pyc
 .DS_Store
 *.pyc
+.idea/vcs.xml
+.idea/PCPartPicker-Analyzer.iml
+.idea/modules.xml
+.idea/misc.xml
+.idea/inspectionProfiles/profiles_settings.xml
+.idea/workspace.xml

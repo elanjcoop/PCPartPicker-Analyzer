@@ -107,7 +107,6 @@ Main method for this class that stems from main and runs through the method to g
 def get_list(html_file):
     soup = get_soup(html_file)
     print(soup.title.string)
-    print("\n")
     prices_per_component_dirty = get_prices_per_component_dirty(soup)
     prices_per_component_clean = delete_duplicates(prices_per_component_dirty)
     prices_per_component_clean = delete_irrelevant_components(prices_per_component_clean)

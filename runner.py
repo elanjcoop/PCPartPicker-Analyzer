@@ -9,7 +9,6 @@ print("and then computes the budget of those values, then lets")
 print("you know where you need to make changes.")
 
 html_file_raw = input("Enter a link:\n")
-print("\n")
 
 html_file = clean_html(html_file_raw)
 
@@ -51,7 +50,7 @@ if is_all_components_present(prices_per_component):
 else:
     print("Sorry, this program requires all of these components to have a " +
           "price:")
-    print(relevant_components[0:-1])
+    print_max_five(relevant_components)
     print("Come back when you have those numbers filled out!")
     raise SystemExit()
-evaluate_price_modest(prices_per_component, budget)
+evaluate_price(prices_per_component, budget)
