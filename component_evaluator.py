@@ -2,8 +2,9 @@ from beautiful_soup_cleaner import relevant_components
 
 component_percentages_humble = {"CPU": 0.27, "Memory": 0.07, "Motherboard": 0.14, "Storage": 0.09, "Video Card": 0.23, "Power Supply": 0.11, "Case": 0.09}
 component_percentages_modest = {"CPU": 0.2, "Memory": 0.07, "Motherboard": 0.11, "Storage": 0.1, "Video Card": 0.35, "Power Supply": 0.09, "Case": 0.08}
-component_percentages_pro = {"CPU": 0.2, "Memory": 0.07, "Motherboard": 0.11, "Storage": 0.1, "Video Card": 0.35, "Power Supply": 0.09, "Case": 0.08}
-component_percentages_enthusiast = {"CPU": 0.2, "Memory": 0.07, "Motherboard": 0.11, "Storage": 0.1, "Video Card": 0.35, "Power Supply": 0.09, "Case": 0.08}
+component_percentages_enthusiast = {"CPU": 0.23, "Memory": 0.05, "Motherboard": 0.1, "Storage": 0.13, "Video Card": 0.37, "Power Supply": 0.06, "Case": 0.06}
+component_percentages_pro = {"CPU": 0.19, "Memory": 0.06, "Motherboard": 0.13, "Storage": 0.11, "Video Card": 0.4, "Power Supply": 0.06, "Case": 0.05}
+component_percentages_god = {"CPU": 0.16, "Memory": 0.06, "Motherboard": 0.07, "Storage": 0.09, "Video Card": 0.47, "Power Supply": 0.06, "Case": 0.09}
 
 
 budget = 0
@@ -38,7 +39,7 @@ def is_all_components_present(component_dict):
 
 """
 Crux of the program!
-Checks each component according to the build type's dictionary
+Checks each component according to the build type's dictionary.
 If it's under 80% of the suggested allocation, you're overspending,
 over 120%, you are overspending.
 Feel free to reach out to me if you think these numbers can be refactored.
@@ -51,7 +52,7 @@ def evaluate_price(component_dict, in_budget):
     for component in component_dict:
         component_percentage = component_dict[component] / in_budget
         if component_percentage < (component_percentages_current[component] * 0.8):
-            print ("You are underspending on " + component + ".")
+            print("You are underspending on " + component + ".")
         elif component_percentage > (component_percentages_current[component] * 1.2):
             print("You are overspending on " + component + ".")
         else:
@@ -71,6 +72,8 @@ def find_build_type(in_budget):
         component_percentages_current = component_percentages_modest
     elif in_budget >= 1300 and in_budget < 2200:
         component_percentages_current = component_percentages_enthusiast
-    else:
+    elif in_budget >= 2200 and in_budget < 3000:
         component_percentages_current = component_percentages_pro
+    else:
+        component_percentages_current = component_percentages_god
     return component_percentages_current

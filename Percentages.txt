@@ -1,16 +1,44 @@
-Humble (0 - 649):
+Humble (≤649):
 cpu: 27%
 gpu: 23%
 storage: 9%
-Memory: 7%
-Mobo: 14%
+memory: 7%
+mobo: 14%
 case: 9%
-Power supply: 11%
+power supply: 11%
 
 Modest (650-1299):
-cpu: 20% gpu: 35%
+cpu: 20%
+gpu: 35%
 storage: 10%
 memory: 7%
 mobo: 11%
 case: 8%
 power supply: 9%
+
+Enthusiast (1300-2199):
+cpu: 23%
+gpu: 37%
+storage: 13%
+memory: 5%
+mobo: 10%
+case: 6%
+power supply: 6%
+
+Pro (2200-2999):
+cpu: 19%
+gpu: 40%
+storage: 11%
+memory: 6%
+mobo: 13%
+case: 5%
+power supply: 6%
+
+God (3000+):
+cpu: 16%
+gpu: 47%
+storage: 9%
+memory: 6%
+mobo: 7%
+case: 9%
+power supply: 6%
