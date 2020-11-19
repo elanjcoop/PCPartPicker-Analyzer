@@ -1,14 +1,12 @@
 import requests 
 from bs4 import BeautifulSoup 
 from selenium import webdriver 
-from selenium.webdriver.common.keys import Keys 
+from selenium.webdriver.common.keys import Keys
 import time 
-  
-#url of the page we want to scrape 
+ 
 url_a = "https://pcpartpicker.com/builds/#X=0,550000&page="
 url_b = "&sort=rating"
 
-# initiating the webdriver. Parameter includes the path of the webdriver. 
 driver = webdriver.Chrome('./chromedriver')
 f = open("url_list.txt", "w")
 
@@ -31,4 +29,4 @@ while True:
     except KeyboardInterrupt:
         break
 f.close()
-driver.close() # closing the webdriver 
+driver.close() # closing the webdriver
