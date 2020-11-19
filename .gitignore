@@ -11,3 +11,4 @@ __pycache__/component_evaluator.cpython-38.pyc
 .idea/workspace.xml
 link_compiler/chromedriver.exe
 link_compiler/geckodriver.log
+chromedriver
