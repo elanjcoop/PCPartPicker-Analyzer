@@ -9,3 +9,5 @@ __pycache__/component_evaluator.cpython-38.pyc
 .idea/misc.xml
 .idea/inspectionProfiles/profiles_settings.xml
 .idea/workspace.xml
+link_compiler/chromedriver.exe
+link_compiler/geckodriver.log
