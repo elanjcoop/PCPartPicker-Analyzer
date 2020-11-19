@@ -1,9 +1,11 @@
+from selenium import webdriver
 from bs4 import BeautifulSoup
 import requests
 import re
 
 relevant_components = ["CPU", "Memory", "Motherboard", "Storage", "Video Card", "Power Supply", "Case", "External Storage"]
-page_not_found = "Page Not Found"
+page_not_found = "Page not found."
+status_code_not_200 = "Page could not be received."
 error_codes = {"/b/": "Please provide a link of a build.",
                "https://pcpartpicker.com/": "Please provide a PCPARTPICKER link."
                }
@@ -68,11 +70,13 @@ Gets soup object from html_file
 :return soup: soup to be parsed
 """
 def get_soup(html_file):
-    source = requests.get(html_file).text
-    soup = BeautifulSoup(source, 'lxml')
+    source = requests.get(html_file)
+    if not source.status_code == 200:
+        print(status_code_not_200)
+        return(status_code_not_200)
+    soup = BeautifulSoup(source.text, 'lxml')
     if page_not_found in soup.title.string:
-        print(page_not_found)
-        raise SystemExit
+        return(page_not_found)
     return soup
 
 """
@@ -91,8 +95,14 @@ def get_prices_per_component_dirty(soup):
         element_price = element.find('p', class_="td__price")
         if element_price == None:
             element_price = element.find('a', class_="td__price")
-        if element_price != None:
-            numeric_string = re.sub("[^0-9, .]", "", element_price.string)
+        
+        if element_price == None or element_price.string == None:
+            prices.append(0)
+            continue
+        
+        numeric_string = re.sub("[^0-9, .]", "", element_price.string)
+        numeric_string = re.sub("\s", "", numeric_string)
+        if numeric_string != "":
             prices.append(float(numeric_string))
         else:
             prices.append(0)
@@ -106,6 +116,8 @@ Main method for this class that stems from main and runs through the method to g
 """
 def get_list(html_file):
     soup = get_soup(html_file)
+    if soup == page_not_found or soup == status_code_not_200:
+        return({})
     print(soup.title.string)
     prices_per_component_dirty = get_prices_per_component_dirty(soup)
     prices_per_component_clean = delete_duplicates(prices_per_component_dirty)

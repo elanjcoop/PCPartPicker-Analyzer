@@ -77,3 +77,16 @@ def find_build_type(in_budget):
     else:
         component_percentages_current = component_percentages_god
     return component_percentages_current
+
+"""
+Returns component dictionary as a list of percentages over total cost
+:param component_dict: dict of prices and components
+:param total_cost: total cost of build
+:return: array of percentages
+"""
+def component_percentage_list(component_dict, total_cost):
+    component_percentage_list = []
+    for key in component_dict:
+        component_percentage = round(component_dict[key] / total_cost, 2)
+        component_percentage_list.append(component_percentage)
+    return component_percentage_list
