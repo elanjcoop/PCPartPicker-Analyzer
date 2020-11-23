@@ -55,13 +55,17 @@ def delete_irrelevant_components(dirty_dict):
         if key not in relevant_components or dirty_dict[key] == 0:
             del clean_dict[key]
         if key == "External Storage":
+            print(clean_dict)
             value = dirty_dict[key]
             try:
                 clean_dict["Storage"] += value
             except KeyError:
                 clean_dict["Storage"] = 0
                 clean_dict["Storage"] += value
-            del clean_dict[key]
+            try:
+                del clean_dict[key]
+            except KeyError:
+                pass
     return clean_dict
 
 """

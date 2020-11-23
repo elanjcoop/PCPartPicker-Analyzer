@@ -1,5 +1,5 @@
 """
-Goes through file or highest-rated links and uses BS4
+Goes through file of highest-rated links and uses BS4
 to add builds with completed prices to database
 """
 import sys
@@ -10,14 +10,17 @@ from component_evaluator import price_total, is_all_components_present, componen
 import sqlite3
 from sqlite3 import IntegrityError
 import time
+import random
 
 def link_prefixer(raw_link):
     return "https://pcpartpicker.com" + raw_link
 
 conn = sqlite3.connect('Build_Percentage_Breakdown.db')
 c = conn.cursor()
-url_file = open("url_list.txt", "r")
-databased_file = open("databased_builds.txt", "r+")
+
+# url_list_n.txt, n increases when new batch arrives
+url_file = open("url_list_2.txt", "r")
+databased_file = open("databased_builds.txt", "a")
 database_file_checked = open("databased_builds_checked.txt", "r+")
 
 # Turn all of our previously checked url's from .txt into an array
@@ -47,7 +50,6 @@ while True:
             if url in database_file_checked_cropped:
                 continue
             else:
-                time.sleep(3)
                 html_link = link_prefixer(url)
                 prices_per_component = get_list(html_link)
                 total_price = price_total(prices_per_component)
@@ -61,12 +63,24 @@ while True:
                               (html_link, total_price, percentage_list[0], percentage_list[1], percentage_list[2], 
                                percentage_list[3], percentage_list[4], percentage_list[5], percentage_list[6]))
                         databased_file.write(url + "\n")
+                        print("link added")
                     except IntegrityError:
                         continue
+                else:
+                    print("link completed, no entry")
+                # end of website-interactivity loop
+                conn.commit()
+                # had to increase # a bunch b/c of bans lol
+                # RNG between 25-35 to better fool site
+                time.sleep(random.randint(25, 35))
     except KeyboardInterrupt:
+        print("Program exited with ctrl-c.")
+        break
+    except TypeError:
+        # error encountered in get_soup(), soup.title.string is NoneType
+        print("Bot has encountered captcha. I have died.")
         break
 
 url_file.close()
 databased_file.close()
 database_file_checked.close()
-conn.commit()
