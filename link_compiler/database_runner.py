@@ -5,7 +5,7 @@ to add builds with completed prices to database
 import sys
 # import parent directory
 sys.path.append("../")
-from beautiful_soup_cleaner import get_list
+from beautiful_soup_cleaner import get_soup, get_list, get_page_title
 from component_evaluator import price_total, is_all_components_present, component_percentage_list
 import sqlite3
 from sqlite3 import IntegrityError
@@ -19,7 +19,7 @@ conn = sqlite3.connect('Build_Percentage_Breakdown.db')
 c = conn.cursor()
 
 # url_list_n.txt, n increases when new batch arrives
-url_file = open("url_list_2.txt", "r")
+url_file = open("url_list_3.txt", "r")
 databased_file = open("databased_builds.txt", "a")
 database_file_checked = open("databased_builds_checked.txt", "r+")
 
@@ -51,7 +51,12 @@ while True:
                 continue
             else:
                 html_link = link_prefixer(url)
-                prices_per_component = get_list(html_link)
+                soup = get_soup(html_link)
+                title = get_page_title(soup)
+                if (title == "Page Not Found"):
+                    print("Site detected bot. Try again later.")
+                    break
+                prices_per_component = get_list(soup)
                 total_price = price_total(prices_per_component)
                 percentage_list = component_percentage_list(prices_per_component, total_price)
                 database_file_checked.write(url + "\n")
@@ -73,6 +78,8 @@ while True:
                 # had to increase # a bunch b/c of bans lol
                 # RNG between 25-35 to better fool site
                 time.sleep(random.randint(25, 35))
+            break
+        break
     except KeyboardInterrupt:
         print("Program exited with ctrl-c.")
         break

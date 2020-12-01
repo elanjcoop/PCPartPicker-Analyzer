@@ -12,7 +12,9 @@ html_file_raw = input("Enter a link:\n")
 
 html_file = clean_html(html_file_raw)
 
-prices_per_component = get_list(html_file)
+soup = get_soup(html_file)
+
+prices_per_component = get_list(soup)
 
 total_price = price_total(prices_per_component)
 

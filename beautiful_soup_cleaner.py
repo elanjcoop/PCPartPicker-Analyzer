@@ -118,8 +118,7 @@ Main method for this class that stems from main and runs through the method to g
 :param html_file: HTML file that is cleaned and ready to run through these methods
 :return prices_per_component_clean: final dict with corrected values and relevabt components
 """
-def get_list(html_file):
-    soup = get_soup(html_file)
+def get_list(soup):
     if soup == page_not_found or soup == status_code_not_200:
         return({})
     print(soup.title.string)
@@ -127,3 +126,9 @@ def get_list(html_file):
     prices_per_component_clean = delete_duplicates(prices_per_component_dirty)
     prices_per_component_clean = delete_irrelevant_components(prices_per_component_clean)
     return prices_per_component_clean
+
+def get_page_title(soup):
+    try:
+        return soup.title.string
+    except AttributeError:
+        return "Page Not Found"
