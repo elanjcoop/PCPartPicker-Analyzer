@@ -53,13 +53,13 @@ while True:
                 html_link = link_prefixer(url)
                 soup = get_soup(html_link)
                 title = get_page_title(soup)
-                if (title == "Page Not Found"):
-                    print("Site detected bot. Try again later.")
-                    break
                 prices_per_component = get_list(soup)
                 total_price = price_total(prices_per_component)
                 percentage_list = component_percentage_list(prices_per_component, total_price)
-                database_file_checked.write(url + "\n")
+                if (title == "Page Not Found"):
+                    continue
+                else:
+                    database_file_checked.write(url + "\n")
                 
                 if is_all_components_present(prices_per_component):
                     try:
@@ -78,8 +78,6 @@ while True:
                 # had to increase # a bunch b/c of bans lol
                 # RNG between 25-35 to better fool site
                 time.sleep(random.randint(25, 35))
-            break
-        break
     except KeyboardInterrupt:
         print("Program exited with ctrl-c.")
         break
