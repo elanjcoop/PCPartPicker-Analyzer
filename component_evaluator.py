@@ -7,8 +7,6 @@ component_percentages_pro = {"CPU": 0.19, "Memory": 0.06, "Motherboard": 0.13, "
 component_percentages_god = {"CPU": 0.16, "Memory": 0.06, "Motherboard": 0.07, "Storage": 0.09, "Video Card": 0.47, "Power Supply": 0.06, "Case": 0.09}
 
 
-budget = 0
-
 """
 Finds the price of the current build when all components are present.
 :param component_dict: dict with all the prices and components
