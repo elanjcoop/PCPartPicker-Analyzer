@@ -19,7 +19,7 @@ conn = sqlite3.connect('Build_Percentage_Breakdown.db')
 c = conn.cursor()
 
 # url_list_n.txt, n increases when new batch arrives
-url_file = open("url_list_3.txt", "r")
+url_file = open("url_list_4.txt", "r")
 databased_file = open("databased_builds.txt", "a")
 database_file_checked = open("databased_builds_checked.txt", "r+")
 
@@ -50,6 +50,8 @@ while True:
             if url in database_file_checked_cropped:
                 continue
             else:
+                # debugging for NoneType title if page removed
+                print(url)
                 html_link = link_prefixer(url)
                 soup = get_soup(html_link)
                 title = get_page_title(soup)
@@ -76,15 +78,18 @@ while True:
                 # end of website-interactivity loop
                 conn.commit()
                 # had to increase # a bunch b/c of bans lol
-                # RNG between 25-35 to better fool site
-                time.sleep(random.randint(25, 35))
+                # RNG to better fool site
+                time.sleep(random.randint(35, 45))
     except KeyboardInterrupt:
         print("Program exited with ctrl-c.")
         break
     except TypeError:
         # error encountered in get_soup(), soup.title.string is NoneType
-        print("Bot has encountered captcha. I have died.")
+        print("Bot has encountered captcha, or broken link. I have died.")
         break
+
+    print("We have completed.")
+    break
 
 url_file.close()
 databased_file.close()

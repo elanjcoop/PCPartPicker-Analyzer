@@ -1,4 +1,3 @@
-from selenium import webdriver
 from bs4 import BeautifulSoup
 import requests
 import re
@@ -55,7 +54,6 @@ def delete_irrelevant_components(dirty_dict):
         if key not in relevant_components or dirty_dict[key] == 0:
             del clean_dict[key]
         if key == "External Storage":
-            print(clean_dict)
             value = dirty_dict[key]
             try:
                 clean_dict["Storage"] += value

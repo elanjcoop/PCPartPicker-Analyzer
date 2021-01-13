@@ -85,6 +85,9 @@ Returns component dictionary as a list of percentages over total cost
 def component_percentage_list(component_dict, total_cost):
     component_percentage_list = []
     for key in component_dict:
-        component_percentage = round(component_dict[key] / total_cost, 2)
-        component_percentage_list.append(component_percentage)
+        if total_cost == 0:
+            component_percentage_list.append(0)
+        else:
+            component_percentage = round(component_dict[key] / total_cost, 2)
+            component_percentage_list.append(component_percentage)
     return component_percentage_list

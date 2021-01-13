@@ -19,11 +19,11 @@ chrome_options.add_argument("disable-infobars");
 chrome = webdriver.Chrome('./chromedriver', options=chrome_options)
 chrome.delete_all_cookies()
 # do around 1000 at a time, so make n increase (url_list_n.txt)
-f = open("url_list_3.txt", "w")
+f = open("url_list_4.txt", "w")
 
 # page count represents current iteration, usually do
 # around 50 per run, then evaluate (50 * 20) (page * links/page) links
-page_counter = 101
+page_counter = 225
 url_counter = 1
 
 while True:
